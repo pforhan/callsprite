@@ -1,0 +1,12 @@
+.settings
+target
+classes
+bin
+build
+.gradle
+.idea
+local.properties
+*.iml
+.project
+.classpath
+launch.json
