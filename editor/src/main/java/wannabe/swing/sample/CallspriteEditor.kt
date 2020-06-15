@@ -8,7 +8,7 @@ import javax.swing.JPanel
 object CallspriteEditor {
   @Throws(InterruptedException::class) @JvmStatic
   fun main(args: Array<String>) {
-    val frame = JFrame("SwingWannabe")
+    val frame = JFrame("Callsprite")
     frame.setLocation(20, 30)
     frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
     val mainLayout = JPanel(BorderLayout())

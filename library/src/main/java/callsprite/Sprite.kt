@@ -1,16 +1,27 @@
 package callsprite
 
+import callsprite.Animation.Paused
 import java.time.Duration
 
 data class Sprite(
-  val frames: List<SpriteFrame>,
-  // TODO consider a position class
-  val x: Int,
-  val y: Int,
-  val z: Int
+  val frames: List<Frame>,
+  val position: Position,
+  val animation: Animation = Paused
 )
 
-data class SpriteFrame(
+sealed class Animation {
+  object Forward: Animation()
+  object Backward: Animation()
+  object Paused: Animation()
+}
+
+data class Position(
+  val x: Int,
+  val y: Int
+)
+typealias Translation = Position
+
+data class Frame(
   val name: String,
   val duration: Duration,
   // TODO is this a byte[]? And is that the best way to represent data anyway?
@@ -18,4 +29,13 @@ data class SpriteFrame(
   val imageData: Array<Byte>
 )
 
-// likely needed: container, data about collisions, state information, current frame, timer support
+data class Scene(
+  val background: List<Background>,
+  val sprites: List<Sprite>
+)
+
+interface Background {
+  val scrollMultiplier: Float
+  val translation: Translation
+  // probably some methods for doing stuff
+}
