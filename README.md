@@ -4,19 +4,20 @@ Sprite loader, animator, editor in kotlin
 Not the first, not the best, just a thing.
 
 # General goals
-Primarily intended for frame-based pixel sprites. Stretch goal of working wtih Spriter-type composite
-images.
+Primarily intended for frame-based pixel sprites, such as those shown [over here](https://sanctumpixel.itch.io/fire-column-pixel-art-effect).
+ 
+Stretch goal of working wtih Spriter-type composite images.
 
 # Implementation plan
 
-General steps and milestones:
+General steps and milestones in roughly the order they should be tackled:
 
-* Loading a set of images
-* animating in place
-* scaling 
-* custom origin points
-* sprite joining
-* fancy file loading
+1. Loading a set of images
+1. animating in place
+1. scaling 
+1. custom origin points
+1. sprite joining
+1. fancy file loading
 
 # Major Classes
 

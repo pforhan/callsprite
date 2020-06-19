@@ -14,9 +14,16 @@ object CallspriteEditor {
     val mainLayout = JPanel(BorderLayout())
     frame.contentPane = mainLayout
 
+    val spritePanel = SpritePanel()
+    mainLayout.add(spritePanel)
+
+    frame.isVisible = true
+    frame.size = mainLayout.preferredSize
+
     // noinspection InfiniteLoopStatement
     while (true) {
       Thread.sleep(100)
+      spritePanel.tick()
     }
   }
 }

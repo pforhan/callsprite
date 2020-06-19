@@ -3,6 +3,7 @@ package callsprite
 import callsprite.Animation.Paused
 import java.time.Duration
 
+/** Set of images comprising a single object. */
 data class Sprite(
   val frames: List<Frame>,
   val position: Position,
@@ -24,18 +25,19 @@ typealias Translation = Position
 data class Frame(
   val name: String,
   val duration: Duration,
-  // TODO is this a byte[]? And is that the best way to represent data anyway?
-  // TODO --> maybe a type parameter instead? Or an index to a platform-specific resource
-  val imageData: Array<Byte>
+  val imageData: Int
 )
 
 data class Scene(
-  val background: List<Background>,
+  val layers: List<BackgroundLayer>,
   val sprites: List<Sprite>
 )
 
-interface Background {
+interface BackgroundLayer {
   val scrollMultiplier: Float
   val translation: Translation
   // probably some methods for doing stuff
+  val imageData: Int
 }
+
+interface UI
