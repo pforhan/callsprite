@@ -1,27 +1,27 @@
 package callsprite.editor
 
 import callsprite.UI
+import java.awt.Color
 import java.awt.Dimension
 import java.awt.Graphics
 import java.awt.event.ComponentAdapter
 import java.awt.event.ComponentEvent
-import java.net.URL
 import javax.swing.ImageIcon
 import javax.swing.JPanel
-import kotlin.math.min
 
 // TODO should have a Sprite setter
 class SpritePanel : JPanel(), UI {
   private var widthPx: Int = 0
   private var heightPx: Int = 0
-  private var showPixelSize: Int = 0
+  private var viewAspect: Float = 0f
   private val iconList = listOf(
-      "/fire_column_medium_4.png".asIcon(),
-      "/fire_column_medium_5.png".asIcon(),
-      "/fire_column_medium_6.png".asIcon(),
-      "/fire_column_medium_7.png".asIcon(),
-      "/fire_column_medium_8.png".asIcon(),
-      "/fire_column_medium_9.png".asIcon()
+      "/fire_column_medium_4.png".readFromClasspath(),
+      "/fire_column_medium_5.png".readFromClasspath(),
+      "/fire_column_medium_6.png".readFromClasspath(),
+      "/fire_column_medium_7.png".readFromClasspath(),
+      "/fire_column_medium_8.png".readFromClasspath(),
+      "/fire_column_medium_9.png".readFromClasspath()
+//    "/r_fire_column_medium_4.png".readFromClasspath()
   )
   private var current = 0
 
@@ -32,11 +32,7 @@ class SpritePanel : JPanel(), UI {
       override fun componentResized(e: ComponentEvent) {
         widthPx = width
         heightPx = height
-        val shortest = min(widthPx, heightPx)
-        val scale =
-          shortest.toFloat() / PREFERRED_SIZE.height.toFloat()
-        showPixelSize = (DEFAULT_PIXEL_SIZE * scale).toInt()
-        if (showPixelSize < 1) showPixelSize = 1
+        viewAspect = widthPx.toFloat() / heightPx.toFloat()
       }
     })
   }
@@ -53,18 +49,43 @@ class SpritePanel : JPanel(), UI {
   override fun paintBorder(g: Graphics) {}
   override fun paintChildren(g: Graphics) {}
   public override fun paintComponent(g: Graphics) {
+    if (heightPx == 0 || widthPx == 0) return
     g.fillRect(0, 0, widthPx, heightPx)
-    val imageIcon = iconList[current]
-//    println("icon is ${imageIcon.iconWidth}x${imageIcon.iconHeight}")
-    // TODO scaling is wrong here, need to keep aspect ratio of original:
-    g.drawImage(imageIcon.image, 0, 0, widthPx, heightPx, null)
+
+    val image = iconList[current]
+    val iconWidth = image.iconWidth
+    val iconHeight = image.iconHeight
+    val iconAspect = iconWidth.toFloat() / iconHeight.toFloat()
+
+    var newWidth = 0
+    var newHeight = 0
+    if (iconAspect > viewAspect) {
+      // icon is wider proportionally than view, so we match widths but allow height to be shorter.
+      newWidth = widthPx
+      // TODO optimize
+      // TODO why divide here but multiply below? -- has to be related to how we calculated aspects?
+      newHeight = (newWidth / iconAspect).toInt()
+    } else {
+      // icon is taller proportionally than view, so match heights but allow width to be smaller.
+      newHeight = heightPx
+      newWidth = (newHeight * iconAspect).toInt()
+    }
+
+    g.drawImage(
+        image.image, 0, 0, newWidth, newHeight, null
+    )
+
+    g.color = Color.WHITE
+    g.drawString("vw $widthPx x $heightPx a-$viewAspect", 0, 15)
+    g.drawString("ic $iconWidth x $iconHeight a-$iconAspect", 0, 30)
+    g.drawString("targ $newWidth x $newHeight", 0, 45)
   }
 
   override fun getPreferredSize(): Dimension {
     return PREFERRED_SIZE
   }
 
-  private fun String.asIcon() = ImageIcon(this::class.java.getResource(this))
+  private fun String.readFromClasspath() = ImageIcon(this::class.java.getResource(this))
 
   companion object {
     const val DEFAULT_PIXEL_SIZE = 20

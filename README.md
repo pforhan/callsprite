@@ -4,20 +4,23 @@ Sprite loader, animator, editor in kotlin
 Not the first, not the best, just a thing.
 
 # General goals
-Primarily intended for frame-based pixel sprites, such as those shown [over here](https://sanctumpixel.itch.io/fire-column-pixel-art-effect).
+Primarily intended for frame-based pixel sprites (aka Pixel Art), such as these, courtesy 
+[sanctumpixel](https://sanctumpixel.itch.io/fire-column-pixel-art-effect).
+![frame4](https://github.com/pforhan/callsprite/raw/main/editor/src/main/resources/fire_column_medium_4.png) ![frame5](https://github.com/pforhan/callsprite/raw/main/editor/src/main/resources/fire_column_medium_5.png) ![frame6](https://github.com/pforhan/callsprite/raw/main/editor/src/main/resources/fire_column_medium_6.png) ![frame7](https://github.com/pforhan/callsprite/raw/main/editor/src/main/resources/fire_column_medium_7.png) ![frame8](https://github.com/pforhan/callsprite/raw/main/editor/src/main/resources/fire_column_medium_8.png) ![frame9](https://github.com/pforhan/callsprite/raw/main/editor/src/main/resources/fire_column_medium_9.png)
  
-Stretch goal of working wtih Spriter-type composite images.
+Stretch goal of working wtih Spriter-type composite images, which let you animate body parts independently. 
 
 # Implementation plan
 
 General steps and milestones in roughly the order they should be tackled:
 
-1. Loading a set of images
 1. animating in place
+1. Loading a set of images
+1. sprite sheets
 1. scaling 
 1. custom origin points
+1. fancy (semantic meaning from filename) file loading
 1. sprite joining
-1. fancy file loading
 
 # Major Classes
 
@@ -80,5 +83,4 @@ Location and velocity: do these belong in sprite?
 
 Theres likely to be a higher level object which supports swapping sprites, ie between standing, walking, running -- may be a per impl thing but the editor would need one anyway
 
-
-Load individual images as sprite frames and play the resulting animation.
+Should we require frames in a frameset to be the same size?

@@ -5,8 +5,14 @@ import java.time.Duration
 
 /** Set of images comprising a single object. */
 data class Sprite(
-  val frames: List<Frame>,
   val position: Position,
+  /** A sprite can have different animation sequences. */
+  val frameSets: Map<String, FrameSet>,
+  var currentSet: String
+)
+
+data class FrameSet(
+  val frames: List<Frame>,
   val animation: Animation = Paused
 )
 
@@ -25,7 +31,7 @@ typealias Translation = Position
 data class Frame(
   val name: String,
   val duration: Duration,
-  val imageData: Int
+  val imageRef: Int
 )
 
 data class Scene(
@@ -36,8 +42,8 @@ data class Scene(
 interface BackgroundLayer {
   val scrollMultiplier: Float
   val translation: Translation
-  // probably some methods for doing stuff
-  val imageData: Int
+  val imageRef: Int
 }
 
+// TODO platform-specific operations
 interface UI
