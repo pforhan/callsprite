@@ -13,6 +13,9 @@ Primarily intended for frame-based pixel sprites (aka Pixel Art), such as these,
 ![frame7](https://github.com/pforhan/callsprite/raw/main/editor/src/main/resources/fire_column_medium_7.png)
 ![frame8](https://github.com/pforhan/callsprite/raw/main/editor/src/main/resources/fire_column_medium_8.png)
 ![frame9](https://github.com/pforhan/callsprite/raw/main/editor/src/main/resources/fire_column_medium_9.png)
+
+...which the tool can put together roughly like this:
+![anim](https://github.com/pforhan/callsprite/raw/main/site/100ms-anim.gif)
  
 Stretch goal of working wtih Spriter-type composite images, which let you animate body parts independently. 
 
