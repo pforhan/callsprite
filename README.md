@@ -25,7 +25,7 @@ Stretch goal of working wtih Spriter-type composite images, which let you animat
 For this library we'll make a sprite a bit like the library's namesake, they'll track a lot of their 
 own state, particularly around animations.  So we'll make Sprite the top-level object.
 
-A Sprite contains a position and a number of animations. Animations contain a number of frames and a 
+A Sprite contains data and a number of animations. Animations contain a number of frames and a 
 behavior (repeat, stop, transition). Frames can have join points that allow multiple sprites to 
 connect to one another. 
 
@@ -40,7 +40,7 @@ General steps and milestones in roughly the order they should be tackled:
 1. custom origin points
 1. fancy (semantic meaning from filename) file loading
 1. sprite joining
-
+1. scene tracking multiple sprites, locations, etc.
 
 ## Namesake
 
@@ -51,7 +51,8 @@ position, velocity, scaling, and collision detection.  A typical command could l
 CALL SPRITE(#6, 108, 13, 80, 9, 90, 0)
 ```
 
-(For the still-curious, that's sprite-number, character number, color, row, column, vertical velocity, horizontal velocity)
+(For the still-curious, that's sprite-number, character number, color, row, column, vertical 
+velocity, horizontal velocity)
 
 # Major Classes / unorganized thoughts 
 
@@ -59,7 +60,7 @@ Sprite is a visual representation. It has:
 * one or more frames
 * Location?
 * animation run status, fwd, bwd, pause
-** And/or anim speed multiplier
+  * And/or anim speed multiplier
 * Possibly other info like collision data though this could be on frames too
 * Rotation/affine transform?
 * joins of name to sprite
@@ -82,12 +83,12 @@ Scene:
 * sprites (implies sprites have locations)
 
 Background
-* data (should support tiled maps)
+* data (should support Tiled maps)
 * transform/translate
 * Should handle itself if larger than screen
 
 Utilities
-* loads tiled maps
+* loads Tiled maps
 * Loads sprite sheets
 * Save/load sprite format 
 * maybe power threading and timing with rx?
