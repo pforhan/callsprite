@@ -1,5 +1,6 @@
 package callsprite.editor
 
+import callsprite.Sprite
 import callsprite.UI
 import java.awt.Color
 import java.awt.Dimension
@@ -15,15 +16,19 @@ class SpritePanel : JPanel(), UI {
   private var heightPx: Int = 0
   private var viewAspect: Float = 0f
   private val iconList = listOf(
-      "/fire_column_medium_4.png".readFromClasspath(),
-      "/fire_column_medium_5.png".readFromClasspath(),
-      "/fire_column_medium_6.png".readFromClasspath(),
-      "/fire_column_medium_7.png".readFromClasspath(),
-      "/fire_column_medium_8.png".readFromClasspath(),
-      "/fire_column_medium_9.png".readFromClasspath()
-//    "/r_fire_column_medium_4.png".readFromClasspath()
+      "/fire_column_medium_4.png",
+      "/fire_column_medium_5.png",
+      "/fire_column_medium_6.png",
+      "/fire_column_medium_7.png",
+      "/fire_column_medium_8.png",
+      "/fire_column_medium_9.png"
+//    "/r_fire_column_medium_4.png".asClasspathImage()
   )
-  private var current = 0
+  val animation = loadAnimationFromClasspath("fyre", iconList)
+  private var theSprite = Sprite<ImageIcon>(
+      animations = mapOf("center-flame" to animation),
+      current = animation
+  )
 
   init {
     isOpaque = true
@@ -37,12 +42,8 @@ class SpritePanel : JPanel(), UI {
     })
   }
 
-  fun tick() {
-    // TODO need timing info or something
-    current++
-    if (current >= iconList.size) {
-      current = 0
-    }
+  fun tick(millis: Long) {
+    theSprite.tick(millis)
     repaint()
   }
 
@@ -52,13 +53,13 @@ class SpritePanel : JPanel(), UI {
     if (heightPx == 0 || widthPx == 0) return
     g.fillRect(0, 0, widthPx, heightPx)
 
-    val image = iconList[current]
+    val image = theSprite.current.current.data
     val iconWidth = image.iconWidth
     val iconHeight = image.iconHeight
     val iconAspect = iconWidth.toFloat() / iconHeight.toFloat()
 
-    var newWidth = 0
-    var newHeight = 0
+    val newWidth: Int
+    val newHeight: Int
     if (iconAspect > viewAspect) {
       // icon is wider proportionally than view, so we match widths but allow height to be shorter.
       newWidth = widthPx
@@ -76,16 +77,14 @@ class SpritePanel : JPanel(), UI {
     )
 
     g.color = Color.WHITE
-    g.drawString("vw $widthPx x $heightPx a-$viewAspect", 0, 15)
-    g.drawString("ic $iconWidth x $iconHeight a-$iconAspect", 0, 30)
+    g.drawString("view $widthPx x $heightPx aspect:$viewAspect", 0, 15)
+    g.drawString("icon $iconWidth x $iconHeight aspect:$iconAspect", 0, 30)
     g.drawString("targ $newWidth x $newHeight", 0, 45)
   }
 
   override fun getPreferredSize(): Dimension {
     return PREFERRED_SIZE
   }
-
-  private fun String.readFromClasspath() = ImageIcon(this::class.java.getResource(this))
 
   companion object {
     const val DEFAULT_PIXEL_SIZE = 20

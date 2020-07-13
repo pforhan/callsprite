@@ -14,7 +14,8 @@ Primarily intended for frame-based pixel sprites (aka Pixel Art), such as these,
 ![frame8](https://github.com/pforhan/callsprite/raw/main/editor/src/main/resources/fire_column_medium_8.png)
 ![frame9](https://github.com/pforhan/callsprite/raw/main/editor/src/main/resources/fire_column_medium_9.png)
 
-...which the tool can put together roughly like this:
+...which the tool can put together roughly like this (the slight stutter here is my capture software,
+not the animation):
 
 ![anim](https://github.com/pforhan/callsprite/raw/main/site/100ms-anim.gif)
  
@@ -29,9 +30,20 @@ A Sprite contains data and a number of animations. Animations contain a number o
 behavior (repeat, stop, transition). Frames can have join points that allow multiple sprites to 
 connect to one another. 
 
+As a guiding principle we want to keep all runtime code as simple as possible.  Loaders and 
+utilities will be more complex, but the resulting Animation will be simple.
+
+For example, if we want to run an animation in reverse, there should be a utility method to do so, 
+and it will produce a new animation object.  But the two animations will always proceed forward in 
+time in a nod to simplicity. 
+
+Likewise, if we want one frame to last longer than another, just repeat the frame rather than deal
+with differing frame lengths.
+
 # Implementation plan
 
-General steps and milestones in roughly the order they should be tackled:
+General steps and milestones in roughly the order they should be tackled.  Some of these are editor
+and some framework; they'll be developed side-by-side.
 
 1. animating in place
 1. Loading a set of images
@@ -54,63 +66,7 @@ CALL SPRITE(#6, 108, 13, 80, 9, 90, 0)
 (For the still-curious, that's sprite-number, character number, color, row, column, vertical 
 velocity, horizontal velocity)
 
-# Major Classes / unorganized thoughts 
-
-Sprite is a visual representation. It has:
-* one or more frames
-* Location?
-* animation run status, fwd, bwd, pause
-  * And/or anim speed multiplier
-* Possibly other info like collision data though this could be on frames too
-* Rotation/affine transform?
-* joins of name to sprite
-  * if some frames are missing join points, fail
-  * ie, every frame should have the same number (and names) of join points
-
-Frame class:
-* data (maybe parameterized)
-* duration
-* maybe collision
-* Maybe join points
-* Transform?
-
-Sprite join point
-* name
-* direction (vector)
-
-Scene:
-* background(s)
-* sprites (implies sprites have locations)
-
-Background
-* data (should support Tiled maps)
-* transform/translate
-* Should handle itself if larger than screen
-
-Utilities
-* loads Tiled maps
-* Loads sprite sheets
-* Save/load sprite format 
-* maybe power threading and timing with rx?
-
-Editor
-* preview anim
-* Background with motion
-* Magnification (default to fill space allotted)
-* Nudging frames (origin editing)
-* tweaking all params
-* switch between sprites at same pos
-* help loading a whole dir
-  * ie show all imgs, and an anim of selected frames
-  * try to help by filenames too... Common prefixes, number suffixes, etc
-
-Samples
-* find a couple free to use for non commercial
-* android loader app
-
 # Thoughts and questions:
 pull in romainguy/kotlin-math if we need to do a lot of matrices
 
-Location and velocity: do these belong in sprite?
-
-Should we require frames in a frameset to be the same size?
+Should we require frames in an Animation to be the same size?

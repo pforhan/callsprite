@@ -1,6 +1,7 @@
 package callsprite.editor
 
 import java.awt.BorderLayout
+import java.time.Clock
 import javax.swing.JFrame
 import javax.swing.JPanel
 
@@ -20,10 +21,14 @@ object CallspriteEditor {
     frame.isVisible = true
     frame.size = mainLayout.preferredSize
 
+    var lastCall = System.currentTimeMillis()
     // noinspection InfiniteLoopStatement
     while (true) {
-      Thread.sleep(100)
-      spritePanel.tick()
+      Thread.sleep(49)
+      val now = System.currentTimeMillis()
+      val diff = now - lastCall
+      lastCall = now
+      spritePanel.tick(diff)
     }
   }
 }
