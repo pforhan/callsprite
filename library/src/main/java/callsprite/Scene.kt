@@ -2,7 +2,7 @@ package callsprite
 
 data class Scene<T>(
   val layers: List<BackgroundLayer>,
-  val sprites: List<SpritePos<T>>
+  val sprites: List<SpritePos>
 ) {
   fun tick(millis: Long) {
     sprites
@@ -17,8 +17,8 @@ interface BackgroundLayer {
   val imageRef: Int
 }
 
-data class SpritePos<T>(
-  val sprite: Sprite<T>,
+data class SpritePos(
+  val sprite: Sprite,
   val pos: Position
 )
 

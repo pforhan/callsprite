@@ -25,7 +25,7 @@ class SpritePanel : JPanel(), UI {
 //    "/r_fire_column_medium_4.png".asClasspathImage()
   )
   val animation = loadAnimationFromClasspath("fyre", iconList)
-  private var theSprite = Sprite<ImageIcon>(
+  private var theSprite = Sprite(
       animations = mapOf("center-flame" to animation),
       current = animation
   )
@@ -53,7 +53,8 @@ class SpritePanel : JPanel(), UI {
     if (heightPx == 0 || widthPx == 0) return
     g.fillRect(0, 0, widthPx, heightPx)
 
-    val image = theSprite.current.current.data
+    // TODO this is ugly, using the statig swingLoader and its storage
+    val image = swingloader.storage[theSprite.current.current]
     val iconWidth = image.iconWidth
     val iconHeight = image.iconHeight
     val iconAspect = iconWidth.toFloat() / iconHeight.toFloat()

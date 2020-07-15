@@ -9,16 +9,16 @@ import javax.swing.ImageIcon
 fun loadAnimationFromClasspath(
   animationName: String,
   fileNames: List<String>
-): Animation<ImageIcon> {
-  val loader = object : FrameLoader<ImageIcon> {
-    override fun load(names: List<String>): List<Frame<ImageIcon>> = names
-        .map { Frame(it, it.asClasspathImage()) }
-  }
+): Animation {
   return load(
       animationName = animationName,
-      loader = loader,
+      loader = swingloader,
       names = fileNames
   )
 }
 
+val swingloader = object : FrameLoader<ImageIcon>() {
+  override fun load(name: String): ImageIcon = name.asClasspathImage()
+
+}
 private fun String.asClasspathImage() = ImageIcon(SpritePanel::class.java.getResource(this))

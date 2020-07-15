@@ -28,6 +28,7 @@ object CallspriteEditor {
       val now = System.currentTimeMillis()
       val diff = now - lastCall
       lastCall = now
+      // TODO we're not on the awt event queue so multithreaded access here leads to occasional crashes
       spritePanel.tick(diff)
     }
   }

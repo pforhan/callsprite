@@ -9,7 +9,7 @@ fun <T> load(
   millis: Long = 150,
   onEndAction: OnEndAction = Repeat,
   names: List<String>
-): Animation<T> = Animation(
+): Animation = Animation(
     name = animationName,
     frameMillis = millis,
     onEnd = onEndAction,

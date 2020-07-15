@@ -6,16 +6,16 @@ import callsprite.TickAction.OnEndAction.Repeat
 import callsprite.TickAction.OnEndAction.Stop
 import callsprite.TickAction.OnEndAction.Switch
 
-data class Animation<T>(
+data class Animation(
   val name: String,
-  val frames: List<Frame<T>>,
+  val frames: List<Frame>,
   val frameMillis: Long,
   var onEnd: OnEndAction = Repeat
 ) {
   var paused = false
   private var currentMillis: Long = 0
   private val totalMillis: Long = frames.size * frameMillis
-  val current: Frame<T>
+  val current: Frame
     get() = frames[(currentMillis / frameMillis).toInt()]
 
   fun tick(millis: Long): TickAction {
@@ -48,28 +48,39 @@ sealed class TickAction {
     object Repeat : OnEndAction()
     data class Switch<T>(
         // TODO maybe this should be a string name
-      val animation: Animation<T>
+      val animation: Animation
     ) : OnEndAction()
   }
 }
 
-data class Frame<T>(
-  val name: String,
-  val data: T
+data class Frame(
+  val name: String
 )
 
-interface FrameLoader<T> {
-  /** Load image data from from disk or other medium */
-  fun load(names: List<String>): List<Frame<T>>
+// TODO by their nature these are disconnected from the other classes -- do they belong here?
+// TODO Not sure I like the auto-caching here
+/**
+ * Loads image data from disk or other media.
+ * @param T Type of image data stored
+ */
+abstract class FrameLoader<T> {
+  val storage = FrameStorage<T>()
+
+  abstract fun load(name: String): T
+
+  fun load(names: List<String>): List<Frame> {
+    val pairs = names.map { Frame(it) to load(it) }
+    storage.add(pairs)
+    return pairs.map { it.first }
+  }
 }
 
-// TODO determine if this class is useful
+// TODO bring closer to a map?  Support Pair?
 class FrameStorage<T> {
-  val storage: MutableMap<String, Frame<T>> = mutableMapOf()
+  val storage: MutableMap<Frame, T> = mutableMapOf()
 
-  fun add(frames: List<Frame<T>>) {
-    // TODO should I just use the frame itself as the key?
-    storage += frames.map { it.name to it }
+  fun add(frames: List<Pair<Frame, T>>) {
+    storage += frames
   }
 
   fun merge(other: FrameStorage<T>) {
@@ -77,4 +88,8 @@ class FrameStorage<T> {
   }
 
   operator fun FrameStorage<T>.plusAssign(other: FrameStorage<T>) = merge(other)
+
+  operator fun get(frame: Frame): T = storage.getOrElse(frame) {
+    error("Could not find frame $frame")
+  }
 }
