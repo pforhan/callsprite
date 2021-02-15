@@ -7,28 +7,14 @@ import java.awt.Dimension
 import java.awt.Graphics
 import java.awt.event.ComponentAdapter
 import java.awt.event.ComponentEvent
-import javax.swing.ImageIcon
 import javax.swing.JPanel
 
-// TODO should have a Sprite setter
-class SpritePanel : JPanel(), UI {
+class SpritePanel(
+  private val theSprite: Sprite
+) : JPanel(), UI {
   private var widthPx: Int = 0
   private var heightPx: Int = 0
   private var viewAspect: Float = 0f
-  private val iconList = listOf(
-      "/fire_column_medium_4.png",
-      "/fire_column_medium_5.png",
-      "/fire_column_medium_6.png",
-      "/fire_column_medium_7.png",
-      "/fire_column_medium_8.png",
-      "/fire_column_medium_9.png"
-//    "/r_fire_column_medium_4.png".asClasspathImage()
-  )
-  val animation = loadAnimationFromClasspath("fyre", iconList)
-  private var theSprite = Sprite(
-      animations = mapOf("center-flame" to animation),
-      current = animation
-  )
 
   init {
     isOpaque = true
@@ -51,10 +37,10 @@ class SpritePanel : JPanel(), UI {
   override fun paintChildren(g: Graphics) {}
   public override fun paintComponent(g: Graphics) {
     if (heightPx == 0 || widthPx == 0) return
+    g.color = Color.BLACK
     g.fillRect(0, 0, widthPx, heightPx)
 
-    // TODO this is ugly, using the statig swingLoader and its storage
-    val image = swingloader.storage[theSprite.current.current]
+    val image = getImage(theSprite.current.current)
     val iconWidth = image.iconWidth
     val iconHeight = image.iconHeight
     val iconAspect = iconWidth.toFloat() / iconHeight.toFloat()

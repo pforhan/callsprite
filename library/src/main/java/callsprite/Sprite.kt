@@ -1,6 +1,6 @@
 package callsprite
 
-import callsprite.TickAction.OnEndAction.Switch
+import callsprite.TickResult.Ended.Switch
 
 /**
  * Set of animations comprising a single object.
