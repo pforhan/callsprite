@@ -18,8 +18,6 @@ Primarily intended for frame-based pixel sprites (aka Pixel Art), such as these,
 not the animation):
 
 ![anim](https://github.com/pforhan/callsprite/raw/main/site/100ms-anim.gif)
- 
-Stretch goal of working wtih Spriter-type composite images, which let you animate body parts independently.
 
 # Overall Concepts 
 
@@ -45,14 +43,15 @@ with differing frame lengths.
 General steps and milestones in roughly the order they should be tackled.  Some of these are editor
 and some framework; they'll be developed side-by-side.
 
-1. animating in place
-1. Loading a set of images
+1. ~~animating in place~~
+1. ~~Loading a set of images~~
+1. ~~scaling~~
 1. sprite sheets
-1. scaling 
 1. custom origin points
 1. fancy (semantic meaning from filename) file loading
 1. sprite joining
 1. scene tracking multiple sprites, locations, etc.
+1. load spriter pro ([scml](http://www.brashmonkey.com/ScmlDocs/ScmlReference.html)) files
 
 ## Namesake
 
