@@ -12,7 +12,7 @@ data class Sprite(
   /** Current active animation. */
   var current: Animation,
   /** Associated sprites. */
-  var connections: List<SpriteConnection>
+  var connections: List<SpriteConnection> = emptyList()
 ) {
   val frame: Frame
     get() = current.current

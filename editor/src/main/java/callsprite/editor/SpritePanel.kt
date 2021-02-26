@@ -61,20 +61,15 @@ class SpritePanel(
     }
 
     // TODO probably abstract a per-sprite draw mechanism.
-    g.drawSprite(theSprite)
+    g.drawImage(
+        image.image, 0, 0, newWidth, newHeight, null
+    )
 
     g.color = Color.WHITE
     g.drawRect(0, 0, newWidth, newHeight)
     g.drawString("view $widthPx x $heightPx aspect:$viewAspect", 0, 15)
     g.drawString("icon $iconWidth x $iconHeight aspect:$iconAspect", 0, 30)
     g.drawString("targ $newWidth x $newHeight", 0, 45)
-  }
-
-  private fun Graphics.drawSprite(sprite: Sprite) {
-    // Draw the sprite first, then its connected sprites
-    drawImage(
-        image.image, 0, 0, newWidth, newHeight, null
-    )
   }
 
   override fun getPreferredSize(): Dimension {
