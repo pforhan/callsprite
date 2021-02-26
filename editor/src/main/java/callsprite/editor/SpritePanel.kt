@@ -33,8 +33,9 @@ class SpritePanel(
     repaint()
   }
 
-  override fun paintBorder(g: Graphics) {}
-  override fun paintChildren(g: Graphics) {}
+  override fun paintBorder(g: Graphics) = Unit
+  override fun paintChildren(g: Graphics) = Unit
+
   public override fun paintComponent(g: Graphics) {
     if (heightPx == 0 || widthPx == 0) return
     g.color = Color.BLACK
@@ -48,25 +49,32 @@ class SpritePanel(
     val newWidth: Int
     val newHeight: Int
     if (iconAspect > viewAspect) {
-      // icon is wider proportionally than view, so we match widths but allow height to be shorter.
+      // Icon is wider proportionally than view, so we match widths but allow height to be shorter.
       newWidth = widthPx
       // TODO optimize
       // TODO why divide here but multiply below? -- has to be related to how we calculated aspects?
       newHeight = (newWidth / iconAspect).toInt()
     } else {
-      // icon is taller proportionally than view, so match heights but allow width to be smaller.
+      // Icon is taller proportionally than view, so match heights but allow width to be smaller.
       newHeight = heightPx
       newWidth = (newHeight * iconAspect).toInt()
     }
 
-    g.drawImage(
-        image.image, 0, 0, newWidth, newHeight, null
-    )
+    // TODO probably abstract a per-sprite draw mechanism.
+    g.drawSprite(theSprite)
 
     g.color = Color.WHITE
+    g.drawRect(0, 0, newWidth, newHeight)
     g.drawString("view $widthPx x $heightPx aspect:$viewAspect", 0, 15)
     g.drawString("icon $iconWidth x $iconHeight aspect:$iconAspect", 0, 30)
     g.drawString("targ $newWidth x $newHeight", 0, 45)
+  }
+
+  private fun Graphics.drawSprite(sprite: Sprite) {
+    // Draw the sprite first, then its connected sprites
+    drawImage(
+        image.image, 0, 0, newWidth, newHeight, null
+    )
   }
 
   override fun getPreferredSize(): Dimension {

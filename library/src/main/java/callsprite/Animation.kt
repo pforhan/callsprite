@@ -32,7 +32,7 @@ data class Animation(
       when (onEnd) {
         Stop -> paused = true
         Repeat -> currentMillis -= totalMillis
-        is Switch<*> -> paused = true
+        is Switch -> paused = true
       }
       return onEnd
     }
@@ -53,8 +53,8 @@ sealed class TickResult {
   sealed class Ended : TickResult() {
     object Stop : Ended()
     object Repeat : Ended()
-    data class Switch<T>(
-        // TODO maybe this should be a string name
+    data class Switch(
+      // TODO maybe this should be a string name
       val animation: Animation
     ) : Ended()
   }
