@@ -14,22 +14,28 @@ Primarily intended for frame-based pixel sprites (aka Pixel Art), such as these,
 ![frame8](https://github.com/pforhan/callsprite/raw/main/editor/src/main/resources/fire_column_medium_8.png)
 ![frame9](https://github.com/pforhan/callsprite/raw/main/editor/src/main/resources/fire_column_medium_9.png)
 
-...which the tool can put together roughly like this (the slight stutter here is my capture software,
-not the animation):
+...which the tool can put together roughly like this:
 
 ![anim](https://github.com/pforhan/callsprite/raw/main/site/100ms-anim.gif)
+or this:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2O4BTYVthDU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 # Overall Concepts 
 
-For this library we'll make a sprite a bit like the library's namesake, they'll track a lot of their 
-own state, particularly around animations.  So we'll make Sprite the top-level object.
+For this library we'll make a sprite a bit like the library's [namesake](#namesake), they'll track a
+lot of their own state, particularly around animations.  So we'll make Sprite the top-level object.
 
-A Sprite contains data and a number of animations. Animations contain a number of frames and a 
+A Sprite contains a number of animations. Animations contain a number of frames and a 
 behavior (repeat, stop, transition). Frames can have join points that allow multiple sprites to 
 connect to one another. 
 
-As a guiding principle we want to keep all runtime code as simple as possible.  Loaders and 
-utilities will be more complex, but the resulting Animation will be simple.
+## Guiding Principles
+
+Two primary things we want to keep in mind:
+* Keep all runtime code as simple as possible.  Loaders and utilities will be more complex, but the 
+resulting Animation will be simple.
+* This is a view layer that handles some logic but not much.  Animations, affine transforms, sure, 
+but concepts like jumping and gravity, no.  Such should be in a model layer.
 
 For example, if we want to run an animation in reverse, there should be a utility method to do so, 
 and it will produce a new animation object.  But the two animations will always proceed forward in 
