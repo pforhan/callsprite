@@ -20,7 +20,7 @@ Primarily intended for frame-based pixel sprites (aka Pixel Art), such as these,
 
 or more complicated animations like these:
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/2O4BTYVthDU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[![animation set](https://img.youtube.com/vi/VID/2O4BTYVthDU.jpg)](https://www.youtube.com/watch?v=2O4BTYVthDU)
 
 # Overall Concepts 
 
