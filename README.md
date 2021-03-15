@@ -20,7 +20,7 @@ Primarily intended for frame-based pixel sprites (aka Pixel Art), such as these,
 
 or more complicated animations like these:
 
-[![animation set](https://img.youtube.com/vi/VID/2O4BTYVthDU.jpg)](https://www.youtube.com/watch?v=2O4BTYVthDU)
+[![animation set](https://img.youtube.com/vi/2O4BTYVthDU/0.jpg)](https://www.youtube.com/watch?v=2O4BTYVthDU)
 
 # Overall Concepts 
 
