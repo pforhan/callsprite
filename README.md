@@ -18,7 +18,7 @@ Primarily intended for frame-based pixel sprites (aka Pixel Art), such as these,
 
 ![anim](https://github.com/pforhan/callsprite/raw/main/site/100ms-anim.gif)
 
-or more complicated animations like these:
+or more complicated animations like these (click to watch on [youtube](https://www.youtube.com/watch?v=2O4BTYVthDU)):
 
 [![animation set](https://img.youtube.com/vi/2O4BTYVthDU/0.jpg)](https://www.youtube.com/watch?v=2O4BTYVthDU)
 
