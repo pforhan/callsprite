@@ -32,7 +32,7 @@ data class Animation(
       when (onEnd) {
         Stop -> paused = true
         Repeat -> currentMillis -= totalMillis
-        is Switch -> paused = true
+        is Switch -> Unit
       }
       return onEnd
     }

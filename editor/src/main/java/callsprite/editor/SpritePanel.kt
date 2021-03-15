@@ -1,6 +1,5 @@
 package callsprite.editor
 
-import callsprite.Sprite
 import callsprite.UI
 import java.awt.Color
 import java.awt.Dimension
@@ -10,7 +9,7 @@ import java.awt.event.ComponentEvent
 import javax.swing.JPanel
 
 class SpritePanel(
-  private val theSprite: Sprite
+  private val state: RuntimeState
 ) : JPanel(), UI {
   private var widthPx: Int = 0
   private var heightPx: Int = 0
@@ -29,7 +28,7 @@ class SpritePanel(
   }
 
   fun tick(millis: Long) {
-    theSprite.tick(millis)
+    state.sprite.tick(millis)
     repaint()
   }
 
@@ -41,7 +40,7 @@ class SpritePanel(
     g.color = Color.BLACK
     g.fillRect(0, 0, widthPx, heightPx)
 
-    val image = getImage(theSprite.current.current)
+    val image = getImage(state.sprite.current.current)
     val iconWidth = image.iconWidth
     val iconHeight = image.iconHeight
     val iconAspect = iconWidth.toFloat() / iconHeight.toFloat()

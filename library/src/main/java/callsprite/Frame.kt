@@ -10,15 +10,21 @@ data class Frame(
 
 /**
  * Loads image data from disk or other media by name and saves in its cache.
+ * @param K Key to load by
  * @param T Type of image data stored
  */
-abstract class FrameLoader<T> {
+abstract class FrameLoader<K, T> {
   val storage = FrameStorage<T>()
 
-  abstract fun load(name: String): T
+  /** Creates a Pair of the string name of the frame and the image data. */
+  abstract fun load(key: K): Pair<String, T>
 
-  fun load(names: List<String>): List<Frame> {
-    val pairs = names.map { Frame(it) to load(it) }
+  private fun load(keys: List<K>): List<Frame> {
+    val pairs = keys
+        .map { val pair = load(it)
+          Frame(pair.first) to pair.second
+        }
+
     storage.add(pairs)
     return pairs.map { it.first }
   }
@@ -27,12 +33,12 @@ abstract class FrameLoader<T> {
     animationName: String,
     millis: Long = 150,
     onEnd: Ended = Repeat,
-    names: List<String>
+    keys: List<K>
   ): Animation = Animation(
       name = animationName,
       frameMillis = millis,
       onEnd = onEnd,
-      frames = load(names)
+      frames = load(keys)
   )
 }
 
@@ -51,7 +57,11 @@ class FrameStorage<T> {
 
   operator fun FrameStorage<T>.plusAssign(other: FrameStorage<T>) = merge(other)
 
+  fun has(frame: Frame) = storage.containsKey(frame)
+
   operator fun get(frame: Frame): T = storage.getOrElse(frame) {
     error("Could not find frame $frame")
   }
+
+  fun getOrNull(frame: Frame): T? = if (storage.contains(frame)) storage[frame] else null
 }
