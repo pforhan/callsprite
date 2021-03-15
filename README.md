@@ -17,7 +17,9 @@ Primarily intended for frame-based pixel sprites (aka Pixel Art), such as these,
 ...which the tool can put together roughly like this:
 
 ![anim](https://github.com/pforhan/callsprite/raw/main/site/100ms-anim.gif)
-or this:
+
+or more complicated animations like these:
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/2O4BTYVthDU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 # Overall Concepts 
