@@ -13,9 +13,9 @@ import javax.swing.JLabel
 import javax.swing.JPanel
 
 /** All the glue to make a sample swing Wannabe application.  */
-object CallspriteEditor {
+object CallspriteEditor2 {
   val state: RuntimeState = RuntimeState(
-      lastRoot = loadLastRoot(),
+      lastRoot =   fddf loadLastRoot(),
       sprite = fire() // TODO if we have a last loaded then use it here
   )
   @Throws(InterruptedException::class) @JvmStatic
