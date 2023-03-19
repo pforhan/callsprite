@@ -76,7 +76,7 @@ class SpritePanel(
   }
 
   companion object {
-    const val DEFAULT_PIXEL_SIZE = 20
+    const val DEFAULT_PIXEL_SIZE = 50
     private const val MIN_PLAYFIELD_HEIGHT = 10
     private const val MIN_PLAYFIELD_WIDTH = 10
     private val PREFERRED_SIZE = Dimension(

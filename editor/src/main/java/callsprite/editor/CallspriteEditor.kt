@@ -18,10 +18,12 @@ object CallspriteEditor {
       lastRoot = loadLastRoot(),
       sprite = fire() // TODO if we have a last loaded then use it here
   )
-  @Throws(InterruptedException::class) @JvmStatic
+
+  @Throws(InterruptedException::class) 
+  @JvmStatic
   fun main(args: Array<String>) {
     val frame = JFrame("Callsprite")
-    frame.setLocation(20, 30)
+    frame.setLocation(100, 100)
     frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
     val mainLayout = JPanel(BorderLayout())
     frame.contentPane = mainLayout
@@ -109,7 +111,7 @@ object CallspriteEditor {
         "/fire_column_medium_8.png",
         "/fire_column_medium_9.png"
     )
-    val animation = loadAnimationFromClasspath("fyre", iconList)
+    val animation = loadAnimationFromClasspath("fyre", 100, iconList)
     return Sprite(
         animations = mapOf("center-flame" to animation),
         current = animation
