@@ -16,10 +16,12 @@ private val fileSwingLoader = object : FrameLoader<File, ImageIcon>() {
 
 fun loadAnimationFromClasspath(
   animationName: String,
-  fileNames: List<String>
+  fileNames: List<String>,
+  millis: Long = 150
 ): Animation {
   return classpathSwingloader.createAnimation(
       animationName = animationName,
+      millis = millis,
       keys = fileNames
   )
 }
