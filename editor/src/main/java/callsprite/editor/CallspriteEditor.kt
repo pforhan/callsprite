@@ -19,7 +19,7 @@ object CallspriteEditor {
       sprite = fire() // TODO if we have a last loaded then use it here
   )
 
-  @Throws(InterruptedException::class) 
+  @Throws(InterruptedException::class)
   @JvmStatic
   fun main(args: Array<String>) {
     val frame = JFrame("Callsprite")
@@ -111,7 +111,9 @@ object CallspriteEditor {
         "/fire_column_medium_8.png",
         "/fire_column_medium_9.png"
     )
-    val animation = loadAnimationFromClasspath("fyre", 100, iconList)
+    val animation = loadAnimationFromClasspath(
+      animationName = "fyre", fileNames = iconList, millis = 100
+    )
     return Sprite(
         animations = mapOf("center-flame" to animation),
         current = animation
